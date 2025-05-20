@@ -1,5 +1,6 @@
 package ru.bicev.notification_service.kafka;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -22,8 +23,10 @@ public class NotificationProducer {
 
     public void sendNotification(Notification notification) {
         try {
-            String messsage = objectMapper.writeValueAsString(notification);
-            kafkaTemplate.send("notifications", messsage);
+            String message = objectMapper.writeValueAsString(notification);
+            logger.info("Serialized notification: {}", message);
+            kafkaTemplate.send("notifications", message);
+            logger.info("Notification produced: {}", notification.getMessage());
         } catch (Exception e) {
             logger.warn("Failed to serialize notification: {}", notification);
             e.printStackTrace();

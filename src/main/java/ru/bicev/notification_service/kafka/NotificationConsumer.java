@@ -22,12 +22,14 @@ public class NotificationConsumer {
     }
 
     @KafkaListener(topics = "notifications", groupId = "notification-group")
-    public void consume(String messageJson) {
+    public void consume(String json) {
+        logger.info("Received from Kafka: {}", json);
         try {
-            Notification notification = objectMapper.readValue(messageJson, Notification.class);
+            Notification notification = objectMapper.readValue(json, Notification.class);
             notificationService.send(notification);
+            logger.info("Notification consumed: {}", notification.getMessage());
         } catch (Exception e) {
-            logger.warn("Failed to process message: {}", messageJson);
+            logger.warn("Failed to process json: {}", json);
             e.printStackTrace();
         }
     }
