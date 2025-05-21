@@ -60,8 +60,8 @@ public class NotificationService {
             Files.writeString(Paths.get("notifications.log"), notification.toString() + lineSeparator,
                     StandardOpenOption.CREATE,
                     StandardOpenOption.APPEND);
-            logger.info("Push notification sent to userId: {} | deviceToken: {} | message: {}",
-                    notification.getUserId(), notification.getDeviceToken(), notification.getMessage());
+            logger.info("Notification sent to logFile: {}",
+                    notification.getMessage());
         } catch (IOException e) {
             logger.error("Error writing to file: {}", e.getMessage());
         }
