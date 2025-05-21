@@ -11,9 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Notification {
 
-    private Long userId;
     private String email;
-    private String deviceToken;
     private NotificationType type;
     private String subject;
     private String message;
@@ -27,20 +25,19 @@ public class Notification {
         return notification;
     }
 
-    public static Notification pushNotification(Long userId, String deviceToken, String message) {
+    public static Notification generalNotification(Long userId, String deviceToken, String message) {
         Notification notification = new Notification();
-        notification.setType(NotificationType.PUSH);
-        notification.setUserId(userId);
-        notification.setDeviceToken(deviceToken);
+        notification.setType(NotificationType.GENERAL);
         notification.setMessage(message);
         return notification;
     }
 
-    public static Notification allNotification(Long userId, String email, String deviceToken, String subject,
-            String message) {
-        Notification notification = new Notification(userId, email, deviceToken, null, subject, message);
-        notification.setType(NotificationType.ALL);
-        return notification;
+    @Override
+    public String toString() {
+        return "Notification [email=" + email + ", type=" + type + ", subject=" + subject + ", message=" + message
+                + "]";
     }
+
+    
 
 }
